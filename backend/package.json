@@ -1,0 +1,19 @@
+{
+  "name": "ats-resume-pipeline-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Backend for automated ATS resume screening and anti-fraud processing",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.0.0",
+    "pg": "^8.23.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  }
+}
