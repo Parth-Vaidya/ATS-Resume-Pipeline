@@ -1,14 +1,17 @@
 import express from "express";
+import jobRoutes from "./routes/job.routes.js";
 
 const app= express();
 
 app.use(express.json());
 
-app.get("/health",(req,res)=>{
-    res.status(200).json({
-        status: "OK",
-        message: "ATS Resume Pipleline API is running"
-    });
-});
+app.use("/api/jobs", jobRoutes);
+
+// app.get("/health",(req,res)=>{
+//     res.status(200).json({
+//         status: "OK",
+//         message: "ATS Resume Pipleline API is running"
+//     });
+// });
 
 export default app;
