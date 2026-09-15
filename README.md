@@ -1,8 +1,3 @@
-Yes — the previous version was more of a **summary README**. For a serious GitHub project, we can make it much more complete: explain the problem, architecture, database, API flow, fraud detection logic, scoring methodology, setup, development phases, status codes, environment variables, testing, security, and roadmap.
-
-Copy **the entire block below** into `README.md`:
-
-````markdown
 # Automated ATS Resume Shortlisting & Anti-Fraud Pipeline
 
 > An automated backend system for parsing, validating, detecting ATS manipulation, and ranking candidate resumes against a target Job Description.
@@ -33,7 +28,7 @@ The project is being developed with a **production-oriented backend architecture
 
 ---
 
-# 🎯 Problem Statement
+## 🎯 Problem Statement
 
 Recruiters may receive hundreds or thousands of resumes for a single job opening.
 
@@ -61,7 +56,6 @@ Resume
    +----> Fraud / Manipulation Detection
    |
    +----> Resume-JD Compatibility Analysis
-````
 
 This project combines both processes into a single backend pipeline.
 
@@ -1909,8 +1903,3 @@ GitHub:
 This project is currently under development.
 
 License information will be added before public release.
-
-```
-
-This version is much closer to a **proper engineering-project README** rather than just documentation of what we've built so far. You can keep updating the `[ ]` → `[x]` checkboxes as we complete each phase.
-```
