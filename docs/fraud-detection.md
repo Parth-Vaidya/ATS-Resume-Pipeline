@@ -22,28 +22,31 @@ Check Font Properties
 Identify White / Near-White Text
  ↓
 Record Evidence
+```
 
 When suspicious text is detected, the system records information such as:
 
-Detected text snippet
-Page number
-Font color
-Fraud type
-Candidate Handling
+- Detected text snippet
+- Page number
+- Font color
+- Fraud type
+
+## Candidate Handling
 
 If hidden white text is detected:
 
-The candidate is marked as REJECTED.
-The ATS score is set to 0.
-The detected content is stored as fraud evidence.
-Further ATS processing is stopped for that candidate.
+- The candidate is marked as REJECTED.
+- The ATS score is set to 0.
+- The detected content is stored as fraud evidence.
+- Further ATS processing is stopped for that candidate.
 
 This prevents suspicious content from influencing the requirement matching process.
 
-Clean Resume
+## Clean Resume
 
 If no suspicious text is detected, the resume continues through the normal pipeline:
 
+```text
 Fraud Check Passed
        ↓
 Text Cleaning
@@ -51,7 +54,9 @@ Text Cleaning
 Requirement Matching
        ↓
 ATS Scoring
-V1 Scope
+```
+
+## V1 Scope
 
 The first version intentionally focuses on one clear and measurable fraud technique.
 

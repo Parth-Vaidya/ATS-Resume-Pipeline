@@ -33,6 +33,7 @@ Apply Scoring Weights
         ↓
 Calculate Overall ATS Score
 Score Interpretation
+```
 
 The resulting score represents the degree to which the resume matches the configured job requirements.
 
@@ -40,21 +41,23 @@ The score should be treated as a screening metric, not as a final hiring decisio
 
 A candidate can also be reviewed using the detailed matched and missing requirements.
 
-Fraud Handling
+## Fraud Handling
 
 Fraud validation occurs before scoring.
 
 If ATS manipulation is detected:
 
+```text
 Fraud Detected
       ↓
 Candidate Rejected
       ↓
 ATS Score = 0
+```
 
 The candidate does not proceed to normal requirement scoring.
 
-Future Improvements
+## Future Improvements
 
 Future versions may introduce semantic or machine-learning-based matching to better understand skills and experience that are expressed differently in a resume.
 

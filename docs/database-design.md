@@ -56,25 +56,27 @@ This can later be used to monitor performance and identify processing bottleneck
 Job
  │
  └── Candidates
-       │
-       ├── Fraud Flags
-       │
-       └── Processing Metrics
+      │
+      ├── Fraud Flags
+      │
+      └── Processing Metrics
+```
 
 A job can have multiple candidates.
 
 A candidate can have multiple fraud flags and processing records.
 
-Data Design Principles
+## Data Design Principles
 
 The database is designed to:
 
-Keep job and candidate data separated.
-Associate every candidate with a specific job.
-Preserve fraud evidence for review.
-Store dynamic job requirements.
-Support future processing and performance analysis.
-V1 Scope
+- Keep job and candidate data separated.
+- Associate every candidate with a specific job.
+- Preserve fraud evidence for review.
+- Store dynamic job requirements.
+- Support future processing and performance analysis.
+
+## V1 Scope
 
 The current database focuses on the core pipeline.
 

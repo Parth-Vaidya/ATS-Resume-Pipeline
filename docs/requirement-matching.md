@@ -30,31 +30,33 @@ Compare Requirements
 Matched / Missing Requirements
         ↓
 Category Scores
-Normalization
+```
+
+## Normalization
 
 Different ways of writing the same technology can be normalized before matching.
 
 For example:
 
-NodeJS
-Node JS
-Node.js
+- NodeJS
+- Node JS
+- Node.js
 
 can be treated as the same requirement.
 
 This improves consistency when comparing recruiter requirements with resume content.
 
-Matching Result
+## Matching Result
 
 For each requirement category, the system records:
 
-Matched requirements
-Missing requirements
-Matching percentage
+- Matched requirements
+- Missing requirements
+- Matching percentage
 
 This provides more information than a single overall score and allows the recruiter to understand why a candidate received a particular result.
 
-V1 Approach
+## V1 Approach
 
 Version 1 uses deterministic text-based matching.
 

@@ -20,32 +20,31 @@ This project provides a backend pipeline that:
 
 ```text
                     Job + Requirements
-                           │
-                           ▼
-                     Node.js API
-                           │
-                    Resume Upload
-                           │
-                           ▼
-                  Python Processor
-                           │
-              ┌────────────┴────────────┐
-              ▼                         ▼
-        Fraud Detection            Text Cleaning
-              │                         │
-              └────────────┬────────────┘
-                           ▼
-                  Requirement Matching
-                           │
-                           ▼
-                     ATS Scoring
-                           │
-                           ▼
-                     PostgreSQL
-                           │
-                           ▼
-                       Results
-              
+                            │
+                            ▼
+                       Node.js API
+                            │
+                      Resume Upload
+                            │
+                            ▼
+                     Python Processor
+                            │
+              ┌─────────────┴─────────────┐
+              ▼                           ▼
+       Fraud Detection               Text Cleaning
+              │                           │
+              └─────────────┬─────────────┘
+                            ▼
+                   Requirement Matching
+                            │
+                            ▼
+                       ATS Scoring
+                            │
+                            ▼
+                       PostgreSQL
+                            │
+                            ▼
+                         Results
 ```
 
 ## Architecture
@@ -88,7 +87,6 @@ Detailed information about individual parts of the system is available in the `d
 - [Database Design](docs/database-design.md)
 - [Development Progress](docs/development-progress.md)
 
-
 ## Project Structure
 
 ```text
@@ -103,7 +101,6 @@ ats-resume-pipeline/
 ├── README.md
 └── .gitignore
 ```
-
 
 ## Current Status
 
