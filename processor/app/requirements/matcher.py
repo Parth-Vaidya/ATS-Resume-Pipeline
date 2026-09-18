@@ -1,4 +1,4 @@
-from normalizer import normalize_term
+from .normalizer import normalize_term
 
 
 def match_terms(required_terms, resume_text):
