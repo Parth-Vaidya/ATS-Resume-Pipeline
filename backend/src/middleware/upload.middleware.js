@@ -8,11 +8,6 @@ const __dirname = path.dirname(__filename);
 
 const uploadPath = path.resolve(__dirname, "../../../storage");
 
-console.log("=================================");
-console.log("CURRENT FILE:", __filename);
-console.log("UPLOAD PATH:", uploadPath);
-console.log("=================================");
-
 fs.mkdirSync(uploadPath, { recursive: true });
 
 const storage = multer.diskStorage({

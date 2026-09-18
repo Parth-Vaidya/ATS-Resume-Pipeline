@@ -2,6 +2,8 @@ CREATE TABLE jobs (
     id SERIAL PRIMARY KEY,
     job_title VARCHAR(255) NOT NULL,
     job_description TEXT NOT NULL,
+    requirements JSONB NOT NULL,
+    scoring_config JSONB,
     status VARCHAR(50) NOT NULL DEFAULT 'CREATED',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     completed_at TIMESTAMP
