@@ -55,11 +55,3 @@ For each requirement category, the system records:
 - Matching percentage
 
 This provides more information than a single overall score and allows the recruiter to understand why a candidate received a particular result.
-
-## V1 Approach
-
-Version 1 uses deterministic text-based matching.
-
-It does not use machine-learning or semantic embedding models.
-
-Future versions may introduce semantic matching to better understand equivalent skills and contextual mentions.

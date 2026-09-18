@@ -75,9 +75,3 @@ The database is designed to:
 - Preserve fraud evidence for review.
 - Store dynamic job requirements.
 - Support future processing and performance analysis.
-
-## V1 Scope
-
-The current database focuses on the core pipeline.
-
-Authentication, recruiter accounts, advanced reporting, and additional analytics can be added in later versions.

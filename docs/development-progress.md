@@ -41,7 +41,9 @@ This document tracks the major development stages of the ATS Resume Shortlisting
 
 ## Current Development
 
-The current focus is integrating the Node.js backend with the Python processing pipeline and completing the end-to-end resume analysis flow.
+The Python resume-processing pipeline is complete for V1.
+
+The next stage is integrating the Python processor with the Node.js backend so that uploaded resumes can be processed through the complete application workflow.
 
 ## Planned
 

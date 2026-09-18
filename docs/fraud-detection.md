@@ -55,9 +55,3 @@ Requirement Matching
        ↓
 ATS Scoring
 ```
-
-## V1 Scope
-
-The first version intentionally focuses on one clear and measurable fraud technique.
-
-Future versions may detect additional ATS manipulation techniques such as other forms of hidden content or suspicious document formatting.
