@@ -4,20 +4,18 @@ from cleaner import clean_text
 from requirements.matcher import match_requirements
 from scorer import calculate_ats_score
 
+import json
+
 
 def process_resume(pdf_path, requirements, scoring_config=None):
 
     text = extract_text(pdf_path)
-
-    print("\nExtracted resume text:")
-    print(text)
 
     fraud_flags = detect_white_text(pdf_path)
 
     if fraud_flags:
 
         print("\nFraud detected!")
-        print(fraud_flags)
 
         return {
             "status": "REJECTED",
@@ -29,16 +27,10 @@ def process_resume(pdf_path, requirements, scoring_config=None):
 
     cleaned_text = clean_text(text)
 
-    print("\nCleaned resume text:")
-    print(cleaned_text)
-
     matching_result = match_requirements(
         requirements,
         cleaned_text
     )
-
-    print("\nRequirement matching:")
-    print(matching_result)
 
     ats_score = calculate_ats_score(
         required_score=matching_result["required_skills"]["score"],
@@ -48,14 +40,12 @@ def process_resume(pdf_path, requirements, scoring_config=None):
         scoring_config=scoring_config
     )
 
-    print("\nATS Score:")
-    print(ats_score)
-
-    print("\nRequirements:")
-    print(requirements)
-
-    print("\nScoring config:")
-    print(scoring_config)
+    return {
+        "status": "ACCEPTED",
+        "ats_score": ats_score,
+        "fraud_flags": [],
+        "matching": matching_result
+    }
 
 
 if __name__ == "__main__":
@@ -88,8 +78,11 @@ if __name__ == "__main__":
         "keywords": 15
     }
 
-    process_resume(
+    result = process_resume(
         "../../storage/1789407216819-202411095_Resume.pdf",
         requirements,
         scoring_config
     )
+
+    print("\nFinal Result:")
+    print(json.dumps(result, indent=4))
