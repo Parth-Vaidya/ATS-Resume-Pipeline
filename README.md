@@ -8,7 +8,8 @@ Recruiters often need to process large numbers of resumes. At the same time, som
 
 This project provides a backend pipeline that:
 
-- Accepts one or multiple PDF resumes.
+- Accepts one PDF resume per request.
+- Batch resume processing is planned for a future version.
 - Associates resumes with a specific job.
 - Detects hidden or suspicious text used for ATS manipulation.
 - Rejects resumes that fail fraud validation.
@@ -61,9 +62,10 @@ Node.js manages the application workflow while Python handles resume-specific pr
 ## V1 Features
 
 - PDF resume upload
-- Multiple resume support
+- Single-resume processing
 - Job creation
 - Recruiter-defined requirements
+- Custom scoring configuration
 - PostgreSQL persistence
 - PDF text extraction
 - Hidden white-text detection
@@ -72,6 +74,8 @@ Node.js manages the application workflow while Python handles resume-specific pr
 - Deterministic requirement matching
 - Deterministic ATS scoring
 - Fraud evidence storage
+- Candidate status management
+- Node.js ↔ Python processing integration
 
 Version 1 intentionally does not use machine-learning models.
 
@@ -104,33 +108,44 @@ ats-resume-pipeline/
 
 ## Current Status
 
-The core foundation of the project has been implemented, including:
+The core Version 1 resume-processing pipeline is complete and functional.
+
+Implemented:
 
 - Backend and database setup
 - Job creation
-- Dynamic job requirements
+- Dynamic recruiter-defined requirements
+- Dynamic scoring configuration
 - Resume upload
 - PDF parsing
 - Fraud detection
 - Text cleaning
 - Requirement matching
-- V1 deterministic scoring
+- Deterministic ATS scoring
+- Candidate processing
+- Node.js ↔ Python integration
+- PostgreSQL persistence
+- Postman testing workflow
 
-The next major stage is completing the end-to-end integration between the Node.js backend and Python processor.
+The next development stage is building frontend-ready read APIs for jobs, candidates and fraud results.
 
 ## Future Development
 
 Possible future improvements include:
 
-- Asynchronous resume processing
-- Queue-based batch processing
+- Frontend-ready candidate and job APIs
+- Pagination and filtering
 - Authentication and authorization
 - Advanced fraud detection
+- Batch resume processing
+- Asynchronous processing
+- Queue-based processing
 - Semantic resume matching
 - Optional machine-learning-based scoring
 - Recruiter dashboard
 - Candidate analytics
 - Production monitoring
+- Docker deployment
 
 ## Project Goal
 

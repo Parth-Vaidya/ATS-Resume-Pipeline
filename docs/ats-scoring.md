@@ -12,15 +12,41 @@ The score is calculated from the candidate's requirement matches.
 
 ## Scoring Categories
 
-The current requirements can be divided into categories such as:
+The current scoring implementation uses:
 
 - Required skills
 - Preferred skills
 - Programming languages
 - Keywords
-- Experience requirements
+
+Experience-based scoring may be added in a future version.
 
 Each category contributes to the overall evaluation according to the scoring configuration.
+
+## Default Scoring Weights
+
+Version 1 uses the following default scoring configuration:
+
+| Category | Weight |
+|---|---:|
+| Required Skills | 50% |
+| Preferred Skills | 20% |
+| Languages | 15% |
+| Keywords | 15% |
+| Total | 100% |
+
+The scoring configuration can be customized for each job.
+
+The final score is calculated as:
+
+Final Score =
+(Required Skills Score × 0.50)
++
+(Preferred Skills Score × 0.20)
++
+(Languages Score × 0.15)
++
+(Keywords Score × 0.15)
 
 ## Scoring Flow
 

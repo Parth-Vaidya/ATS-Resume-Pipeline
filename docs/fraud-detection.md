@@ -10,6 +10,16 @@ Some resumes may contain keywords in white or near-white text so that they are d
 
 The system examines the text formatting information inside the PDF to identify such content.
 
+### Detection Threshold
+
+The current implementation identifies text as white or near-white when all RGB color components are greater than 245:
+
+R > 245
+G > 245
+B > 245
+
+The detection is performed using PDF text span color information provided by PyMuPDF.
+
 ## Detection Process
 
 ```text
@@ -55,3 +65,11 @@ Requirement Matching
        ↓
 ATS Scoring
 ```
+
+## Current Limitation
+
+Version 1 currently focuses on hidden white or near-white text.
+
+Other ATS manipulation techniques may not be detected yet.
+
+Future versions may add additional PDF-level fraud detection techniques.

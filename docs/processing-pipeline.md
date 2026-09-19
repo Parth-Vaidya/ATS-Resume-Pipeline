@@ -112,13 +112,13 @@ No machine-learning model is required for the current processing flow.
 
 ## Current Implementation
 
-The complete V1 processing pipeline is implemented in Python.
+The complete V1 processing pipeline is implemented and integrated with the Node.js backend.
 
-The processor currently produces a structured result containing:
+The Python processor currently produces a structured result containing:
 
 - Candidate processing status
 - ATS score
 - Fraud flags
 - Requirement matching results
 
-The next stage is connecting this processor to the Node.js backend.
+The Node.js backend stores the processing result in PostgreSQL and returns it through the API.

@@ -5,64 +5,135 @@ This document tracks the major development stages of the ATS Resume Shortlisting
 ## Completed
 
 ### Project Foundation
-- Project architecture established.
-- Node.js and Express backend created.
-- PostgreSQL database configured.
-- Environment configuration established.
-- Git repository initialized and connected to GitHub.
+
+- [x] Project architecture established
+- [x] Node.js and Express backend created
+- [x] PostgreSQL database configured
+- [x] Environment configuration established
+- [x] Git repository initialized and connected to GitHub
 
 ### Job Management
-- Job creation implemented.
-- Job descriptions can be stored.
-- Recruiter-defined requirements are supported.
-- Requirements are stored dynamically with each job.
+
+- [x] Job creation implemented
+- [x] Job descriptions stored
+- [x] Recruiter-defined requirements supported
+- [x] Requirements stored dynamically using JSONB
+- [x] Custom scoring configuration supported
 
 ### Resume Upload
-- PDF resume upload implemented.
-- Multiple resumes can be uploaded for a job.
-- Uploaded resume metadata is stored in PostgreSQL.
-- Resume files are stored separately from the database.
+
+- [x] PDF resume upload implemented
+- [x] Single-resume processing implemented
+- [x] PDF file validation implemented
+- [x] Uploaded resume metadata stored in PostgreSQL
+- [x] Resume files stored separately from the database
 
 ### Python Processing
-- Python processing environment established.
-- PDF text extraction implemented using PyMuPDF.
-- Resume text cleaning implemented.
-- Requirement normalization implemented.
-- Requirement matching implemented.
+
+- [x] Python processing environment established
+- [x] Node.js → Python integration implemented
+- [x] PDF text extraction implemented using PyMuPDF
+- [x] Resume text cleaning implemented
+- [x] Requirement normalization implemented
+- [x] Requirement matching implemented
+- [x] Deterministic ATS scoring implemented
 
 ### Fraud Detection
-- Hidden white-text detection implemented.
-- Detected suspicious text is recorded with relevant evidence.
-- Fraudulent candidates can be rejected before ATS scoring.
 
-### V1 Scoring
-- Deterministic requirement-based scoring is being used.
-- Machine-learning models are intentionally excluded from V1.
+- [x] Hidden white-text detection implemented
+- [x] White/near-white text inspection using PDF span colors
+- [x] Fraud evidence recorded
+- [x] Fraud flags stored in PostgreSQL
+- [x] Fraudulent candidates rejected before ATS scoring
+- [x] ATS score set to 0 for rejected candidates
 
-## Current Development
+### Candidate Processing
 
-The Python resume-processing pipeline is complete for V1.
+- [x] Candidate creation
+- [x] Candidate status management
+- [x] `UPLOADED` status
+- [x] `PROCESSING` status
+- [x] `ACCEPTED` status
+- [x] `REJECTED` status
+- [x] `FAILED` status
+- [x] Processing result persistence
 
-The next stage is integrating the Python processor with the Node.js backend so that uploaded resumes can be processed through the complete application workflow.
+### Testing
 
-## Planned
+- [x] Clean resume tested
+- [x] Fraudulent resume tested
+- [x] PostgreSQL results verified
+- [x] Node.js and Python integration verified
+- [x] Postman workflow verified
+- [x] Automatic Job ID handling implemented in Postman
 
-- Complete Node.js ↔ Python processing integration.
-- Complete ATS scoring workflow.
-- Improve batch resume processing.
-- Add asynchronous job processing.
-- Add authentication and authorization.
-- Improve error handling and validation.
-- Add automated testing.
-- Containerize the application.
-- Add production monitoring and logging.
+## Current Status
 
-## Future
+The core Version 1 resume-processing pipeline is complete and functional.
+
+Current workflow:
+
+Job Creation
+    ↓
+Recruiter Requirements
+    ↓
+Resume Upload
+    ↓
+Candidate Creation
+    ↓
+Python Processing
+    ↓
+Fraud Detection
+    ↓
+Requirement Matching
+    ↓
+ATS Scoring
+    ↓
+PostgreSQL Persistence
+    ↓
+API Response
+
+Version 1 intentionally uses deterministic requirement matching and scoring without machine-learning models.
+
+## Next Development Stage
+
+The next stage is building the frontend-ready read APIs.
+
+Planned APIs include:
+
+- [ ] Get all jobs
+- [ ] Get job by ID
+- [ ] Get candidates for a job
+- [ ] Get candidate by ID
+- [ ] Get fraud flags for a candidate
+
+## Backend Improvements
+
+After the read APIs, planned backend improvements include:
+
+- [ ] Centralized error handling
+- [ ] Improved validation
+- [ ] Pagination
+- [ ] Filtering
+- [ ] Sorting
+- [ ] Candidate name and email extraction
+- [ ] Processing metrics
+- [ ] Authentication and authorization
+- [ ] Rate limiting
+- [ ] Automated backend testing
+
+## Future Development
 
 Potential future improvements include:
 
-- Semantic resume matching.
-- Machine-learning-based scoring.
-- More advanced fraud detection.
-- Recruiter dashboard.
-- Advanced candidate analytics.
+- [ ] Batch resume processing
+- [ ] Asynchronous processing
+- [ ] Queue-based processing
+- [ ] Redis / BullMQ
+- [ ] Advanced fraud detection
+- [ ] Semantic resume matching
+- [ ] Optional machine-learning models
+- [ ] Recruiter dashboard
+- [ ] Candidate analytics
+- [ ] Production monitoring
+- [ ] Docker deployment

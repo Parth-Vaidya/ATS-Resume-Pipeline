@@ -12,14 +12,27 @@ Represents a job created by a recruiter.
 
 Stores:
 
+- Job ID
 - Job title
 - Job description
 - Recruiter-defined requirements
 - Scoring configuration
 - Processing status
-- Creation and completion information
+- Creation timestamp
+- Completion timestamp
 
-Requirements are stored as structured JSON data so different jobs can have different requirements.
+### Requirements
+
+Requirements are stored using PostgreSQL JSONB.
+
+This allows different jobs to define different:
+
+- Required skills
+- Preferred skills
+- Languages
+- Keywords
+
+without changing the database schema.
 
 ### Candidates
 
@@ -33,6 +46,22 @@ Stores:
 - Processing status
 - ATS score
 
+### Candidate Status
+
+Candidates can have the following processing statuses:
+
+- `UPLOADED`
+- `PROCESSING`
+- `ACCEPTED`
+- `REJECTED`
+- `FAILED`
+
+`ACCEPTED` indicates that the resume passed fraud validation and was successfully scored.
+
+`REJECTED` indicates that fraud was detected.
+
+`FAILED` indicates an unexpected processing error.
+
 ### Fraud Flags
 
 Stores evidence of detected ATS manipulation.
@@ -43,6 +72,16 @@ Each fraud record is associated with a candidate and can contain:
 - Detected text
 - Page number
 - Font information
+
+## Current Processing Relationship
+
+A job can have multiple candidates.
+
+Each candidate represents one uploaded resume for that job.
+
+A candidate can have multiple fraud flags.
+
+Processing metrics are associated with the candidate and are intended for future performance monitoring.
 
 ### Processing Metrics
 

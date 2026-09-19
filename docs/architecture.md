@@ -1,81 +1,81 @@
 # System Architecture
 
-The ATS Resume Shortlisting & Anti-Fraud Pipeline is designed as a modular backend system where each component has a specific responsibility.
+## Overview
 
-## High-Level Architecture
+The ATS Resume Shortlisting & Anti-Fraud Pipeline is a backend system that processes resumes, detects ATS manipulation techniques, matches resumes against recruiter-defined requirements, and calculates a deterministic ATS score.
 
-The system consists of three main components:
+Version 1 uses a Node.js backend with a Python processing layer and PostgreSQL database.
 
-- **Node.js Backend** — handles API requests, file uploads, business logic and system orchestration.
-- **PostgreSQL Database** — stores jobs, candidates, requirements, fraud results and processing information.
-- **Python Processor** — handles resume parsing, fraud detection, text cleaning, requirement matching and ATS scoring.
+## Architecture
 
-### Flow
+Client
+  |
+  v
+Node.js + Express
+  |
+  +---- PostgreSQL
+  |
+  +---- Resume Storage
+  |
+  v
+Python Processor
+  |
+  +---- PDF Parser
+  +---- Fraud Detector
+  +---- Text Cleaner
+  +---- Requirement Matcher
+  +---- ATS Scorer
+  |
+  v
+Node.js
+  |
+  v
+Client
 
-Client → Node.js API → Python Processor → PostgreSQL → Node.js API → Client
-
-## Component Responsibilities
+## Components
 
 ### Node.js Backend
 
-Node.js acts as the main backend of the application.
+Responsible for:
 
-It is responsible for:
-
-- Receiving job information and recruiter-defined requirements.
-- Accepting resume uploads.
-- Managing candidates and jobs.
-- Communicating with the Python processor.
-- Managing processing status.
-- Returning results to the client.
+- REST API
+- Job creation
+- Resume upload
+- File validation
+- Candidate creation
+- Candidate status management
+- Database communication
+- Calling the Python processor
 
 ### Python Processor
 
-Python is dedicated to resume analysis.
+Responsible for:
 
-It handles the processing stages:
-
-1. PDF text extraction
-2. Fraud detection
-3. Text cleaning
-4. Requirement matching
-5. ATS scoring
-
-Keeping these operations separate from the main API makes the system easier to maintain and extend.
+- PDF text extraction
+- White-text fraud detection
+- Text cleaning
+- Requirement matching
+- ATS score calculation
 
 ### PostgreSQL
 
-PostgreSQL acts as the persistent data layer.
+Stores:
 
-It stores:
-
-- Job information
+- Jobs
 - Recruiter-defined requirements
-- Candidate information
-- Resume metadata
-- Fraud detection results
+- Candidates
 - ATS scores
+- Fraud detection results
 - Processing metrics
 
-## Processing Separation
+### Storage
 
-The project follows a separation-of-responsibility approach:
+Uploaded PDF resumes are temporarily stored in the `storage/` directory.
 
-**Node.js**
-→ API and orchestration
+The directory is ignored by Git.
 
-**Python**
-→ Resume processing and analysis
+## Version 1 Design
 
-**PostgreSQL**
-→ Persistent storage
+The scoring system is deterministic and requirement-based.
 
-This allows each component to evolve independently.
-
-## V1 Architecture
-
-Version 1 intentionally uses deterministic processing without machine-learning models.
-
-The current scoring system is based on recruiter-defined requirements and direct requirement matching.
-
-Machine-learning-based semantic analysis may be introduced in a future version if required.
+Future versions may introduce semantic similarity or ML-based ranking.
