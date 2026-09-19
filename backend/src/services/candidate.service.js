@@ -68,3 +68,22 @@ export const createFraudFlag = async (
 
     return result.rows[0];
 };
+
+export const updateCandidateStatus = async (
+    candidateId,
+    status
+) => {
+    const query = `
+        UPDATE candidates
+        SET status = $1
+        WHERE id = $2
+        RETURNING *;
+    `;
+
+    const result = await pool.query(query, [
+        status,
+        candidateId
+    ]);
+
+    return result.rows[0];
+};
