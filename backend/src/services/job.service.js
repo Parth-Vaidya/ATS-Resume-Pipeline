@@ -29,3 +29,19 @@ export const createJob = async (
 
     return result.rows[0];
 };
+
+export const getJobById = async (jobId) => {
+    const query = `
+        SELECT *
+        FROM jobs
+        WHERE id = $1;
+    `;
+
+    const result = await pool.query(query, [jobId]);
+
+    if (result.rows.length === 0) {
+        throw new Error("Job not found");
+    }
+
+    return result.rows[0];
+};

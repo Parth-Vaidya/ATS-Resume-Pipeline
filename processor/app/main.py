@@ -8,23 +8,18 @@ import json
 
 
 def process_resume(pdf_path, requirements, scoring_config=None):
-
     text = extract_text(pdf_path)
-
     fraud_flags = detect_white_text(pdf_path)
 
     if fraud_flags:
-
-        print("\nFraud detected!")
-
+        # print("\nFraud detected!")
         return {
             "status": "REJECTED",
             "ats_score": 0,
             "fraud_flags": fraud_flags
         }
 
-    print("\nNo fraud detected.")
-
+    # print("\nNo fraud detected.")
     cleaned_text = clean_text(text)
 
     matching_result = match_requirements(
@@ -49,40 +44,16 @@ def process_resume(pdf_path, requirements, scoring_config=None):
 
 
 if __name__ == "__main__":
+    input_data = json.loads(input())
 
-    requirements = {
-        "required_skills": [
-            "Node.js",
-            "PostgreSQL",
-            "Docker"
-        ],
-        "preferred_skills": [
-            "Redis",
-            "AWS"
-        ],
-        "languages": [
-            "JavaScript",
-            "Python"
-        ],
-        "keywords": [
-            "REST API",
-            "backend",
-            "microservices"
-        ]
-    }
-
-    scoring_config = {
-        "required_skills": 50,
-        "preferred_skills": 20,
-        "languages": 15,
-        "keywords": 15
-    }
+    pdf_path = input_data["pdf_path"]
+    requirements = input_data["requirements"]
+    scoring_config = input_data.get("scoring_config")
 
     result = process_resume(
-        "../../storage/1789407216819-202411095_Resume.pdf",
+        pdf_path,
         requirements,
         scoring_config
     )
 
-    print("\nFinal Result:")
-    print(json.dumps(result, indent=4))
+    print(json.dumps(result))
