@@ -126,6 +126,7 @@ Implemented:
 - Node.js ↔ Python integration
 - PostgreSQL persistence
 - Postman testing workflow
+- Frontend-ready candidate and job APIs
 
 The next development stage is building frontend-ready read APIs for jobs, candidates and fraud results.
 
@@ -133,7 +134,6 @@ The next development stage is building frontend-ready read APIs for jobs, candid
 
 Possible future improvements include:
 
-- Frontend-ready candidate and job APIs
 - Pagination and filtering
 - Authentication and authorization
 - Advanced fraud detection
