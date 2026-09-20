@@ -67,6 +67,32 @@ This document tracks the major development stages of the ATS Resume Shortlisting
 - [x] Postman workflow verified
 - [x] Automatic Job ID handling implemented in Postman
 
+### API Layer
+
+- [x] Job creation API
+- [x] Get all jobs API
+- [x] Get job by ID API
+- [x] Resume processing API
+- [x] Get candidates by job API
+- [x] Get candidate by ID API
+- [x] Get candidate fraud flags API
+
+## Frontend-Ready API Layer
+
+The initial frontend-ready API layer is now complete.
+
+Implemented APIs:
+
+- [x] `POST /api/jobs`
+- [x] `GET /api/jobs`
+- [x] `GET /api/jobs/:jobId`
+- [x] `POST /api/jobs/:jobId/resume`
+- [x] `GET /api/jobs/:jobId/candidates`
+- [x] `GET /api/candidates/:candidateId`
+- [x] `GET /api/candidates/:candidateId/fraud-flags`
+
+Detailed API documentation is available in [`api.md`](api.md).
+
 ## Current Status
 
 The core Version 1 resume-processing pipeline is complete and functional.
@@ -97,15 +123,15 @@ Version 1 intentionally uses deterministic requirement matching and scoring with
 
 ## Next Development Stage
 
-The next stage is building the frontend-ready read APIs.
+The backend API layer required for initial frontend integration is complete.
 
-Planned APIs include:
+The next stage is:
 
-- [ ] Get all jobs
-- [ ] Get job by ID
-- [ ] Get candidates for a job
-- [ ] Get candidate by ID
-- [ ] Get fraud flags for a candidate
+- Backend cleanup and hardening
+- Frontend integration
+- API response refinement
+- Improved error handling
+- Validation improvements
 
 ## Backend Improvements
 

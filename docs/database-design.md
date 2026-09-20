@@ -21,18 +21,18 @@ Stores:
 - Creation timestamp
 - Completion timestamp
 
-### Requirements
+### Requirements and Scoring Configuration
 
-Requirements are stored using PostgreSQL JSONB.
+The `jobs` table contains two JSONB fields:
 
-This allows different jobs to define different:
+- `requirements`
+- `scoring_config`
 
-- Required skills
-- Preferred skills
-- Languages
-- Keywords
+`requirements` stores recruiter-defined requirements for the job.
 
-without changing the database schema.
+`scoring_config` stores the weighting used by the ATS scoring system.
+
+This allows different jobs to have different requirements and scoring strategies without changing the database schema.
 
 ### Candidates
 
@@ -46,9 +46,9 @@ Stores:
 - Processing status
 - ATS score
 
-### Candidate Status
+### Candidate Statuses
 
-Candidates can have the following processing statuses:
+Candidates currently use the following statuses:
 
 - `UPLOADED`
 - `PROCESSING`
@@ -56,9 +56,9 @@ Candidates can have the following processing statuses:
 - `REJECTED`
 - `FAILED`
 
-`ACCEPTED` indicates that the resume passed fraud validation and was successfully scored.
+`ACCEPTED` means the resume passed fraud validation and was successfully scored.
 
-`REJECTED` indicates that fraud was detected.
+`REJECTED` means fraud was detected.
 
 `FAILED` indicates an unexpected processing error.
 
@@ -89,16 +89,24 @@ Stores information about the processing time for different stages of resume anal
 
 This can later be used to monitor performance and identify processing bottlenecks.
 
-## Relationships
+## Current Relationships
 
 ```text
-Job
- │
- └── Candidates
-      │
-      ├── Fraud Flags
-      │
-      └── Processing Metrics
+jobs
+  |
+  | 1:N
+  v
+candidates
+  |
+  | 1:N
+  v
+fraud_flags
+
+candidates
+  |
+  | 1:1
+  v
+processing_metrics
 ```
 
 A job can have multiple candidates.

@@ -79,3 +79,17 @@ The directory is ignored by Git.
 The scoring system is deterministic and requirement-based.
 
 Future versions may introduce semantic similarity or ML-based ranking.
+
+## API Layer
+
+The Node.js backend exposes REST APIs for:
+
+- Job creation
+- Job retrieval
+- Resume processing
+- Candidate retrieval
+- Fraud flag retrieval
+
+The API layer acts as the interface between the client and the processing/database layers.
+
+Detailed API specifications are available in [`api.md`](api.md).

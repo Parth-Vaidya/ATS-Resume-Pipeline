@@ -45,3 +45,15 @@ export const getJobById = async (jobId) => {
 
     return result.rows[0];
 };
+
+export const getJobs = async () => {
+    const query = `
+        SELECT *
+        FROM jobs
+        ORDER BY created_at DESC;
+    `;
+
+    const result = await pool.query(query);
+
+    return result.rows;
+};

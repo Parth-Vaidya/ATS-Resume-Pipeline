@@ -16,9 +16,19 @@ They can include:
 
 The requirements are **dynamic** and are not hardcoded into the processing system.
 
-### Requirement Storage
+## Requirement Storage
 
-Requirements are stored as JSONB in PostgreSQL.
+Requirements are stored in PostgreSQL using the JSONB data type.
+
+Each job can therefore define its own requirements without changing the Python processing code.
+
+The currently supported categories are:
+
+- `required_skills`
+- `preferred_skills`
+- `languages`
+- `keywords`
+
 
 Example structure:
 
@@ -41,7 +51,13 @@ Example structure:
   ]
 }
 
-This allows every job to define its own requirements without changing the Python processing code.
+
+### Experience Requirements
+
+Experience-based requirements are not currently included in the ATS scoring implementation.
+
+They may be added in a future version.
+
 
 ## Matching Process
 
@@ -89,6 +105,6 @@ Version 1 primarily uses normalized text matching.
 
 It does not perform semantic similarity analysis.
 
-For example, two technically equivalent phrases may not always be recognized as equivalent if they use significantly different wording.
+Therefore, technically equivalent phrases may not always be recognized when they use significantly different wording.
 
 Semantic matching may be introduced in a future version.

@@ -37,16 +37,31 @@ Version 1 uses the following default scoring configuration:
 
 The scoring configuration can be customized for each job.
 
-The final score is calculated as:
+## Scoring Formula
+
+The final ATS score is calculated as:
 
 Final Score =
-(Required Skills Score × 0.50)
-+
-(Preferred Skills Score × 0.20)
-+
-(Languages Score × 0.15)
-+
-(Keywords Score × 0.15)
+    Required Skills Score × 0.50
+  + Preferred Skills Score × 0.20
+  + Languages Score × 0.15
+  + Keywords Score × 0.15
+
+## Dynamic Scoring Configuration
+
+The scoring weights are stored in the job's `scoring_config` JSONB field.
+
+This allows different jobs to use different scoring configurations.
+
+Example:
+
+```json
+{
+    "required_skills": 50,
+    "preferred_skills": 20,
+    "languages": 15,
+    "keywords": 15
+}
 
 ## Scoring Flow
 

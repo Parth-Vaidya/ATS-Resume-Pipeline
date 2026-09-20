@@ -87,3 +87,45 @@ export const updateCandidateStatus = async (
 
     return result.rows[0];
 };
+
+export const getCandidatesByJobId = async (jobId) => {
+    const query = `
+        SELECT *
+        FROM candidates
+        WHERE job_id = $1
+        ORDER BY created_at DESC;
+    `;
+
+    const result = await pool.query(query, [jobId]);
+
+    return result.rows;
+};
+
+export const getCandidateById = async (candidateId) => {
+    const query = `
+        SELECT *
+        FROM candidates
+        WHERE id = $1;
+    `;
+
+    const result = await pool.query(query, [candidateId]);
+
+    if (result.rows.length === 0) {
+        throw new Error("Candidate not found");
+    }
+
+    return result.rows[0];
+};
+
+export const getFraudFlagsByCandidateId = async (candidateId) => {
+    const query = `
+        SELECT *
+        FROM fraud_flags
+        WHERE candidate_id = $1
+        ORDER BY created_at ASC;
+    `;
+
+    const result = await pool.query(query, [candidateId]);
+
+    return result.rows;
+};

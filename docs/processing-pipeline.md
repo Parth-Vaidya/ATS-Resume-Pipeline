@@ -112,13 +112,21 @@ No machine-learning model is required for the current processing flow.
 
 ## Current Implementation
 
-The complete V1 processing pipeline is implemented and integrated with the Node.js backend.
+The complete Version 1 Node.js → Python → PostgreSQL processing pipeline is implemented and tested.
 
-The Python processor currently produces a structured result containing:
+The Python processor returns:
 
-- Candidate processing status
+- Processing status
 - ATS score
 - Fraud flags
 - Requirement matching results
 
-The Node.js backend stores the processing result in PostgreSQL and returns it through the API.
+The Node.js backend persists the processing result and returns it through the API.
+
+## Current Processing Model
+
+Resume processing is currently synchronous.
+
+The resume is processed immediately after upload and the API waits for the processing result before responding.
+
+Asynchronous queue-based processing is planned for future versions.
