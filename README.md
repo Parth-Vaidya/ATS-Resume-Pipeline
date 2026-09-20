@@ -128,8 +128,6 @@ Implemented:
 - Postman testing workflow
 - Frontend-ready candidate and job APIs
 
-The next development stage is building frontend-ready read APIs for jobs, candidates and fraud results.
-
 ## Future Development
 
 Possible future improvements include:
