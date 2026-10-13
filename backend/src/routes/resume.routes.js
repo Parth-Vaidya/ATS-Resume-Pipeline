@@ -1,4 +1,6 @@
 import express from "express";
+import multer from "multer";
+import fs from "fs/promises";
 import { uploadResumes } from "../middleware/upload.middleware.js";
 import { createCandidate, updateCandidateStatus, updateCandidateResult, createFraudFlag } from "../services/candidate.service.js";
 import { getJobById } from "../services/job.service.js";
@@ -11,15 +13,70 @@ router.post("/:jobId/resume", uploadResumes.single("file"),
         try {
             const { jobId } = req.params;
 
-            const job = await getJobById(jobId);
+            //if jobID is not a positive integer, return 400
+            if (!/^[1-9]\d*$/.test(jobId)) {
+                return res.status(400).json({
+                    message: "Invalid job ID"
+                });
+            }
 
+            let job;
+
+            try {
+                job = await getJobById(jobId);
+            } catch (error) {
+                if (error.message === "Job not found") {
+                    return res.status(404).json({
+                        message: "Job not found"
+                    });
+                }
+
+                throw error;
+            }
+
+            let uploadedFile;
+            let candidateCreated = false;
             const file = req.file;
+            uploadedFile = file;
+
+            if (!file) {
+                return res.status(400).json({
+                    message: "Please upload a PDF using the 'file' field"
+                });
+            }
+
+            // Validate the PDF file by checking its signature (so that renamed .txt files to .pdf are not accepted)
+            const fileHandle = await fs.open(file.path, "r");
+
+            try {
+                const signature = Buffer.alloc(5);
+                const { bytesRead } = await fileHandle.read(
+                    signature,
+                    0,
+                    5,
+                    0
+                );
+
+                if (
+                    bytesRead !== 5 ||
+                    signature.toString("ascii") !== "%PDF-"
+                ) {
+                    await fs.unlink(file.path);
+
+                    return res.status(400).json({
+                        message: "Invalid PDF file"
+                    });
+                }
+            } finally {
+                await fileHandle.close();
+            }
 
             const candidate = await createCandidate(
                 jobId,
                 file.originalname,
                 file.path
             );
+            candidateCreated = true;
 
             await updateCandidateStatus(
                 candidate.id,
@@ -57,33 +114,72 @@ router.post("/:jobId/resume", uploadResumes.single("file"),
                 });
 
             } catch (error) {
-
                 console.error(
                     `Processing failed for candidate ${candidate.id}:`,
                     error
                 );
 
-                await updateCandidateStatus(
-                    candidate.id,
-                    "FAILED"
-                );
+                try {
+                    await updateCandidateStatus(
+                        candidate.id,
+                        "FAILED"
+                    );
+                } catch (statusError) {
+                    console.error(
+                        "Failed to update candidate status:",
+                        statusError.message
+                    );
+                }
 
-                res.status(500).json({
+                return res.status(500).json({
                     message: "Resume processing failed",
                     candidate_id: candidate.id,
                     status: "FAILED"
                 });
             }
-
         } catch (error) {
-
             console.error("Resume upload error:", error);
 
-            res.status(500).json({
+            if (uploadedFile && candidateCreated === false) {
+                try {
+                    await fs.unlink(uploadedFile.path);
+                } catch (cleanupError) {
+                    if (cleanupError.code !== "ENOENT") {
+                        console.error(
+                            "File cleanup failed:",
+                            cleanupError.message
+                        );
+                    }
+                }
+            }
+
+            return res.status(500).json({
                 message: "Failed to upload resume"
             });
         }
     }
 );
+
+router.use((error, req, res, next) => {
+    if (error instanceof multer.MulterError) {
+        if (error.code === "LIMIT_FILE_SIZE") {
+            return res.status(413).json({
+                message: "Resume must not exceed 5 MB"
+            });
+        }
+
+        return res.status(400).json({
+            message: error.message
+        });
+    }
+
+    if (error.message === "Only PDF files are allowed") {
+        return res.status(400).json({
+            message: error.message
+        });
+    }
+
+    next(error);
+});
 
 export default router;
