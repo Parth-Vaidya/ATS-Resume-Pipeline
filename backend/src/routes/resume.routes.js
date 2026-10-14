@@ -1,5 +1,6 @@
 import express from "express";
 import multer from "multer";
+import path from "node:path";
 import fs from "fs/promises";
 import { uploadResumes } from "../middleware/upload.middleware.js";
 import { createCandidate, updateCandidateStatus, updateCandidateResult, createFraudFlag } from "../services/candidate.service.js";
@@ -8,31 +9,31 @@ import { processResume } from "../services/processing.service.js";
 
 const router = express.Router();
 
-router.post("/:jobId/resume", uploadResumes.single("file"),
+const validateJobBeforeUpload = async (req, res, next) => {
+    const { jobId } = req.params;
+
+    //if jobID is not a positive integer, return 400
+    if (!/^[1-9]\d*$/.test(jobId)) {
+        return res.status(400).json({ message: "Invalid job ID" });
+    }
+
+    try {
+        req.job = await getJobById(jobId);
+        next();
+    } catch (error) {
+        if (error.message === "Job not found") {
+            return res.status(404).json({ message: "Job not found" });
+        }
+        next(error);
+    }
+};
+
+router.post("/:jobId/resume", validateJobBeforeUpload, uploadResumes.single("file"),
     async (req, res) => {
         try {
             const { jobId } = req.params;
 
-            //if jobID is not a positive integer, return 400
-            if (!/^[1-9]\d*$/.test(jobId)) {
-                return res.status(400).json({
-                    message: "Invalid job ID"
-                });
-            }
-
-            let job;
-
-            try {
-                job = await getJobById(jobId);
-            } catch (error) {
-                if (error.message === "Job not found") {
-                    return res.status(404).json({
-                        message: "Job not found"
-                    });
-                }
-
-                throw error;
-            }
+            const job = req.job;
 
             let uploadedFile;
             let candidateCreated = false;
@@ -47,6 +48,7 @@ router.post("/:jobId/resume", uploadResumes.single("file"),
 
             // Validate the PDF file by checking its signature (so that renamed .txt files to .pdf are not accepted)
             const fileHandle = await fs.open(file.path, "r");
+            let isValidPdf = false;
 
             try {
                 const signature = Buffer.alloc(5);
@@ -57,18 +59,20 @@ router.post("/:jobId/resume", uploadResumes.single("file"),
                     0
                 );
 
-                if (
-                    bytesRead !== 5 ||
-                    signature.toString("ascii") !== "%PDF-"
-                ) {
-                    await fs.unlink(file.path);
-
-                    return res.status(400).json({
-                        message: "Invalid PDF file"
-                    });
-                }
+                isValidPdf =
+                    bytesRead === 5 &&
+                    signature.toString("ascii") === "%PDF-";
             } finally {
                 await fileHandle.close();
+            }
+
+            if (!isValidPdf) {
+                await fs.unlink(file.path);
+                uploadedFile = null;
+
+                return res.status(400).json({
+                    message: "Invalid PDF file"
+                });
             }
 
             const candidate = await createCandidate(

@@ -2,6 +2,7 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
+import { generateUniqueFilename } from "../utils/file.utils.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -15,10 +16,9 @@ const storage = multer.diskStorage({
         cb(null, uploadPath);
     },
 
-    filename: (req, file, cb) => {
-        const uniqueName = `${Date.now()}-${file.originalname}`;
-        cb(null, uniqueName);
-    }
+filename: (req, file, cb) => {
+    cb(null, generateUniqueFilename(file.originalname));
+}
 });
 
 const fileFilter = (req, file, cb) => {
