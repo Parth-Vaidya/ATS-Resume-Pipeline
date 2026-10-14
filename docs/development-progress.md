@@ -27,6 +27,8 @@ This document tracks the major development stages of the ATS Resume Shortlisting
 - [x] PDF file validation implemented
 - [x] Uploaded resume metadata stored in PostgreSQL
 - [x] Resume files stored separately from the database
+- [x] Unique UUID-based filenames for uploaded resumes
+- [x] PDF file signature validation
 
 ### Python Processing
 
@@ -76,6 +78,8 @@ This document tracks the major development stages of the ATS Resume Shortlisting
 - [x] Get candidates by job API
 - [x] Get candidate by ID API
 - [x] Get candidate fraud flags API
+- [x] Retrieve candidate resume PDF API
+
 
 ## Frontend-Ready API Layer
 
@@ -90,6 +94,7 @@ Implemented APIs:
 - [x] `GET /api/jobs/:jobId/candidates`
 - [x] `GET /api/candidates/:candidateId`
 - [x] `GET /api/candidates/:candidateId/fraud-flags`
+- [x] `GET /api/candidates/:candidateId/resume`
 
 Detailed API documentation is available in [`api.md`](api.md).
 

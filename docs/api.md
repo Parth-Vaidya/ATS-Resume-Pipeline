@@ -19,6 +19,7 @@ http://localhost:5000
 | `GET` | `/api/jobs/:jobId/candidates` | Get candidates for a job |
 | `GET` | `/api/candidates/:candidateId` | Get a specific candidate |
 | `GET` | `/api/candidates/:candidateId/fraud-flags` | Get fraud flags for a candidate |
+| `GET` | `/api/candidates/:candidateId/resume` | Retrieve a candidate's original PDF resume |
 
 ## Endpoints
 
@@ -405,6 +406,51 @@ Candidates currently use the following statuses:
 | `FAILED` | Unexpected processing error occurred |
 
 ---
+
+### 8. Retrieve Candidate Resume
+
+`GET /api/candidates/:candidateId/resume`
+
+Retrieves the original PDF resume associated with a candidate record.
+
+#### Example Request
+
+`GET /api/candidates/10/resume`
+
+#### Processing
+
+The endpoint performs the following operations:
+
+1. Validates the candidate ID.
+2. Retrieves the candidate record from PostgreSQL.
+3. Resolves the stored resume path.
+4. Validates that the resolved path is inside the configured storage directory.
+5. Checks whether the resume file exists.
+6. Returns the PDF for inline display.
+
+#### Successful Response
+
+**Status:** `200 OK`
+
+**Content-Type:** `application/pdf`
+
+**Content-Disposition:** `inline`
+
+The response contains PDF binary data rather than JSON, allowing compatible clients such as Postman and web browsers to display the resume.
+
+#### Error Responses
+
+| HTTP Status                 | Description                         |
+| --------------------------- | ----------------------------------- |
+| `400 Bad Request`           | Invalid candidate ID                |
+| `403 Forbidden`             | Stored resume path fails validation |
+| `404 Not Found`             | Candidate or resume file not found  |
+| `500 Internal Server Error` | Unexpected resume retrieval error   |
+
+#### Security Note
+
+The endpoint validates the stored file path but does not currently enforce authentication or recruiter authorization. Access control must be addressed before production use.
+
 
 ## ATS Score
 
